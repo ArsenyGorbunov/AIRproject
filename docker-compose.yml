@@ -8,8 +8,6 @@ services:
       - FLASK_APP=login.py
       - FLASK_DEBUG=1
       - PYTHONBUFFERED=True
-      # - GOOGLE_CLIENT_ID=649563360804-idhjabn3v3mq17obfma6o0278aasmoeb.apps.googleusercontent.com
-      # - GOOGLE_CLIENT_SECRET=USoxiproQKyl07_y2pYWdHO4
       - OAUTHLIB_INSECURE_TRANSPORT='1'
     ports: 
       - 5000:5000/tcp
