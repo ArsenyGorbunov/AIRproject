@@ -159,6 +159,8 @@ def index():
         notebook_json = item.processed_data
         doc = button_class(item.name, notebook_json['functions'], notebook_json['classes'], notebook_json['loops'], item.link)  
         data.append(doc)  
+    if data == []:
+        data = ['no notebooks']
     return render_template('frontpage.html', data = data)
 
 @app.route('/login')
@@ -451,24 +453,28 @@ def search():
 
     else: 
         table = Index.query.filter_by(user_id=current_user.id).first()
-        translator = Translator()
-        translation = translator.translate(query, src = 'ru', dest = 'en')
-        query = translation.text.lower()
+        if table is None:
+            data = ['no notebooks']
+            return render_template('frontpage.html', data = data)
+        else:
+            translator = Translator()
+            translation = translator.translate(query, src = 'ru', dest = 'en')
+            query = translation.text.lower()
 
-        related_documents = find(
-                        query,\
-                        table.inverted_index,\
-                        table.doc_lengths,\
-                        table.doc_index
-                        )
+            related_documents = find(
+                            query,\
+                            table.inverted_index,\
+                            table.doc_lengths,\
+                            table.doc_index
+                            )
 
-        data = []
-        table = Notebook.query.filter_by(user_id=current_user.id)
-        for item in table:
-            if item.name in related_documents:
-                notebook_json = item.processed_data
-                doc = button_class(item.name, notebook_json['functions'], notebook_json['classes'], notebook_json['loops'], item.link)  
-                data.append(doc)
+            data = []
+            table = Notebook.query.filter_by(user_id=current_user.id)
+            for item in table:
+                if item.name in related_documents:
+                    notebook_json = item.processed_data
+                    doc = button_class(item.name, notebook_json['functions'], notebook_json['classes'], notebook_json['loops'], item.link)  
+                    data.append(doc)
 
-        return render_template('frontpage.html', data = data)
+            return render_template('frontpage.html', data = data)
 

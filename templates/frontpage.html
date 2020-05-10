@@ -42,37 +42,43 @@
                     </li>
                 </ul>
             </div>
-            {% for element in data %}
-            <div>
-                <button type="button" class="btn btn-primary" onclick="show('{{element.button1hash}}')">Functions</button>
-                <button type="button" class="btn btn-primary" onclick="show('{{element.button2hash}}')">Classes</button>
-                <button type="button" class="btn btn-primary" onclick="show('{{element.button3hash}}')">Loops</button>
-                <button type="button" class="btn btn-primary" onclick="expand_all('{{element.button1hash}}', '{{element.button2hash}}','{{element.button3hash}}')">Expand/Close all</button>
-                <a href="{{element.link}}"> {{element.name}}</a>
-                <div id = "{{element.button1hash}}" class="hidden pre">
-                    <h3> Functions </h3>
-                    <pre class="brush: python;">
-                        {{element.button1text}}
-                    </pre>
+            {%- if data[0] == 'no notebooks' -%}
+                <span> No notebooks in database. Please click "Revise notebooks" button and then "Update notebooks" button to add notebooks in database.</span>
+            {% elif data == [] %}
+                <span> No matchings for query. Please enter another query or search for empty query to return all notebooks. </span>
+            {% else %}
+                {% for element in data %}
+                <div>
+                    <button type="button" class="btn btn-primary" onclick="show('{{element.button1hash}}')">Functions</button>
+                    <button type="button" class="btn btn-primary" onclick="show('{{element.button2hash}}')">Classes</button>
+                    <button type="button" class="btn btn-primary" onclick="show('{{element.button3hash}}')">Loops</button>
+                    <button type="button" class="btn btn-primary" onclick="expand_all('{{element.button1hash}}', '{{element.button2hash}}','{{element.button3hash}}')">Expand/Close all</button>
+                    <a href="{{element.link}}"> {{element.name}}</a>
+                    <div id = "{{element.button1hash}}" class="hidden pre">
+                        <h3> Functions </h3>
+                        <pre class="brush: python;">
+                            {{element.button1text}}
+                        </pre>
+                    </div>
+                    <div id = "{{element.button2hash}}" class="hidden pre">
+                        <h3> Classes </h3>
+                        <pre class="brush: python;">
+                            {{element.button2text}}
+                        </pre>
+                    </div>
+                    <div id = "{{element.button3hash}}" class="hidden pre">
+                        <h3> Loops </h3>
+                        <pre class="brush: python; first-line: -1;">
+                            {{element.button3text}}
+                        </pre>
+                        <!-- Highlight all -->
+                        <script type="text/javascript">
+                            SyntaxHighlighter.all()
+                        </script>
+                    </div>
                 </div>
-                <div id = "{{element.button2hash}}" class="hidden pre">
-                    <h3> Classes </h3>
-                    <pre class="brush: python;">
-                        {{element.button2text}}
-                    </pre>
-                </div>
-                <div id = "{{element.button3hash}}" class="hidden pre">
-                    <h3> Loops </h3>
-                    <pre class="brush: python; first-line: -1;">
-                        {{element.button3text}}
-                    </pre>
-                    <!-- Highlight all -->
-                    <script type="text/javascript">
-                        SyntaxHighlighter.all()
-                    </script>
-                </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+            {%- endif -%}
         {%- else -%}
             <a href="{{url_for('login')}}" class="btn btn-primary btn-block" style="padding: 15px 0;">Login</a>
         {%- endif -%}

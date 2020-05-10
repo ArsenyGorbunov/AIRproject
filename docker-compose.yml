@@ -3,7 +3,7 @@ services:
   flask:
     build: .
     #command: gunicorn --certfile cert.pem --keyfile key.pem -b 0.0.0.0:5000 searcher:app --reload
-    command: gunicorn --bind 0.0.0.0:5000 login:app --reload -w 4 --timeout 180
+    command: gunicorn --bind 0.0.0.0:5000 login:app --reload -w 4 --timeout 300
     environment:
       - FLASK_APP=login.py
       - FLASK_DEBUG=1
