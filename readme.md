@@ -11,7 +11,7 @@ How to use:
 2) Press "Revise notebooks" to see the list of notebooks 
 3) Press "Update notebooks" to update or add new notebooks 
  
-Application extracts from notebooks following: 
+Application extracts from notebooks the following: 
 - loops 
 - functions 
 - classes 
