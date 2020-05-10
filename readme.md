@@ -6,14 +6,13 @@ You can give it a try here (but remember that it will store all your ipnb files 
 ec2-18-188-194-242.us-east-2.compute.amazonaws.com:5000 
 
 
-How to use:\
-1) Login with google \
-2) Press "Revise notebooks" to see the list of notebooks \
-3) Press "Update notebooks" to update or add new notebooks \
-
-Information retrieval: \
-From notebooks application extract: \
-- loops \
-- functions \
-- classes \
-- text from comments in code or markdowns (search doesn't use code) \
+How to use:
+1) Login with google 
+2) Press "Revise notebooks" to see the list of notebooks 
+3) Press "Update notebooks" to update or add new notebooks 
+ 
+Application extracts from notebooks following: 
+- loops 
+- functions 
+- classes 
+- text from comments in code or markdowns (search doesn't use code)
