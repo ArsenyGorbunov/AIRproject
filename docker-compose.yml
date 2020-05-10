@@ -1,0 +1,17 @@
+version: "3"
+services:
+  flask:
+    build: .
+    #command: gunicorn --certfile cert.pem --keyfile key.pem -b 0.0.0.0:5000 searcher:app --reload
+    command: gunicorn --bind 0.0.0.0:5000 login:app --reload -w 4 --timeout 180
+    environment:
+      - FLASK_APP=login.py
+      - FLASK_DEBUG=1
+      - PYTHONBUFFERED=True
+      # - GOOGLE_CLIENT_ID=649563360804-idhjabn3v3mq17obfma6o0278aasmoeb.apps.googleusercontent.com
+      # - GOOGLE_CLIENT_SECRET=USoxiproQKyl07_y2pYWdHO4
+      - OAUTHLIB_INSECURE_TRANSPORT='1'
+    ports: 
+      - 5000:5000/tcp
+    volumes:
+      - ./:/root

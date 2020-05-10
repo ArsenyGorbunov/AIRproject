@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <!-- https://snippetnuggets.com/howtos/webTipsAndTricks/miscellaneous/use-syntax-highlighter-in-website-blog-html.html -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeDefault.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushPython.js"></script>
+
+        <title>Update</title>
+        <base href="">
+    </head>
+    <style type="text/css">
+        .box {
+          width:300px;
+          padding-top:1px;
+          border-style:solid;
+          border-color:#336699;
+          border-width:1px;
+          padding-left:1px;
+          padding-bottom:1px;
+          background: blue;
+          height: auto;
+          font-size:25px;
+          color:white;
+        }
+        /* .box{
+        border:1px solid #999999;
+        color:#6f6f6f;
+        font-size:10px;
+        width:100%;
+        position: relative;
+        display: inline-block;
+        height: auto;
+        } */
+    </style>
+<body>
+    <div class="main">
+        {%- if current_user.is_authenticated -%}
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- <li></li><a href="#">Welcome {{current_user.name}}</a></li> -->
+                    <li>
+                        <a href="{{url_for('index')}}" class="btn btn-primary" style='color:white; background-color:blue;' > Main page</a>
+                        <a href="{{url_for('parsing',update=True)}}" class="btn btn-primary" style='color:white; background-color:green;' > Update notebooks</a>
+                    </li>
+                </ul>
+            </div>
+            <p class="box">
+                <span>
+                    New
+               </span>
+            </p>
+            {% for element in new %}
+            <div>
+                <span>{{element['name']}}</span>
+            </div>
+            {% endfor %}
+            <p class="box">
+                <span>
+                    Refresh
+               </span>
+            </p>
+            {% for element in refresh %}
+            <div>
+                <span>{{element['name']}}</span>
+            </div>
+            {% endfor %}
+
+            <p class="box">
+                <span>
+                    In database
+               </span>
+            </p>
+            {% for element in in_database %}
+            <div>
+                <span>{{element['name']}}</span>
+            </div>
+            {% endfor %}
+
+        {%- else -%}
+            <a href="{{url_for('login')}}" class="btn btn-primary btn-block" style="padding: 15px 0;">Login</a>
+        {%- endif -%}
+    </div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

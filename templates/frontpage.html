@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <!-- https://snippetnuggets.com/howtos/webTipsAndTricks/miscellaneous/use-syntax-highlighter-in-website-blog-html.html -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeDefault.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushPython.js"></script>
+
+        <title>Main page</title>
+        <style>
+            .hidden {
+                display: none;
+            }
+        </style>
+        <base href="">
+    </head>
+<body>
+    <div class="main">
+        {%- if current_user.is_authenticated -%}
+            <form class="navbar-form navbar-left" role="search" action="/search">
+              <div class="form-group">
+                <input autofocus type="text" class="form-control" placeholder="Search" name="q">
+              </div>
+              <!-- <button type="submit" class="btn btn-default btn-sm">Search</button> -->
+            </form>
+            <!-- <ul class="nav navbar-nav">
+              <li><a href="#">Upload</a></li>
+            </ul> -->
+            <div>
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- <li></li><a href="#">Welcome {{current_user.name}}</a></li> -->
+                    <li>
+                        <span>{{current_user.name}}</span>
+                        <a href="{{url_for('logout')}}" class="btn btn-primary" style='color:white; background-color:grey;' > <img src="{{current_user.avatar}}?sz=20" width="25" height="25" alt="{{current_user.name}}"> Logout</a>
+                        <a href="{{url_for('parsing',update = False)}}" class="btn btn-primary" style='color:white; background-color:blue;' > Revise notebooks</a>
+                    </li>
+                </ul>
+            </div>
+            {% for element in data %}
+            <div>
+                <button type="button" class="btn btn-primary" onclick="show('{{element.button1hash}}')">Functions</button>
+                <button type="button" class="btn btn-primary" onclick="show('{{element.button2hash}}')">Classes</button>
+                <button type="button" class="btn btn-primary" onclick="show('{{element.button3hash}}')">Loops</button>
+                <button type="button" class="btn btn-primary" onclick="expand_all('{{element.button1hash}}', '{{element.button2hash}}','{{element.button3hash}}')">Expand/Close all</button>
+                <a href="{{element.link}}"> {{element.name}}</a>
+                <div id = "{{element.button1hash}}" class="hidden pre">
+                    <h3> Functions </h3>
+                    <pre class="brush: python;">
+                        {{element.button1text}}
+                    </pre>
+                </div>
+                <div id = "{{element.button2hash}}" class="hidden pre">
+                    <h3> Classes </h3>
+                    <pre class="brush: python;">
+                        {{element.button2text}}
+                    </pre>
+                </div>
+                <div id = "{{element.button3hash}}" class="hidden pre">
+                    <h3> Loops </h3>
+                    <pre class="brush: python; first-line: -1;">
+                        {{element.button3text}}
+                    </pre>
+                    <!-- Highlight all -->
+                    <script type="text/javascript">
+                        SyntaxHighlighter.all()
+                    </script>
+                </div>
+            </div>
+            {% endfor %}
+        {%- else -%}
+            <a href="{{url_for('login')}}" class="btn btn-primary btn-block" style="padding: 15px 0;">Login</a>
+        {%- endif -%}
+    </div>
+
+    <script>
+        function expand_all(id1,id2,id3){
+            let iterable = [id1, id2, id3];
+            let close_list = []
+            for (const id of iterable) {
+                let element = document.getElementById(id);
+                if (element.classList.contains('hidden')) {
+                    var flag = 1;
+                    close_list.push(id);
+                }
+            }
+            if (flag === 1){
+                open_all(close_list)
+            } else {
+                open_all(iterable)
+            }
+
+        }
+
+        function open_all(close_list){
+            for (const id of close_list) {
+                show(id)
+            }
+        }
+
+        function show(id){
+            let element = document.getElementById(id);
+            element.classList.toggle("hidden");
+        }
+
+    </script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
